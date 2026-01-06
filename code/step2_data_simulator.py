@@ -13,7 +13,7 @@ import math
 # Configuration
 MQTT_BROKER = 'localhost'
 MQTT_PORT = 1883
-NUM_METERS = 500
+NUM_METERS = 5000
 REPORTING_INTERVAL = 300  # 5 minutes in seconds
 
 class SmartMeterSimulator:
@@ -70,7 +70,7 @@ class SmartMeterSimulator:
         return max(100, power)  # Minimum 100W
     
     def generate_reading(self, meter_id, timestamp):
-        """Generate a complete meter reading"""
+        """Generate a complete meter reading - INCLUDES meter_id in JSON"""
         hour = timestamp.hour
         
         # Generate power
@@ -89,6 +89,7 @@ class SmartMeterSimulator:
         energy = (power / 1000) * (5 / 60)  # Convert to kWh
         
         return {
+            'meter_id': meter_id,  # ✓ IMPORTANT: Include meter_id in JSON payload
             'timestamp': timestamp.isoformat(),
             'power': round(power, 2),
             'voltage': round(voltage, 2),
@@ -108,8 +109,8 @@ class SmartMeterSimulator:
         Simulate real-time data generation for specified duration
         For testing: 1 hour = 12 readings per meter
         """
-        print(f"\n📊 Starting real-time simulation for {duration_hours} hour(s)")
-        print(f"Number of meters: {self.num_meters}")
+        print(f"\n Starting real-time simulation for {duration_hours} hour(s)")
+        print(f"N1umber of meters: {self.num_meters}")
         print(f"Reporting interval: {REPORTING_INTERVAL} seconds (5 minutes)")
         
         start_time = datetime.now()
@@ -119,7 +120,7 @@ class SmartMeterSimulator:
         reading_count = 0
         
         while current_time < end_time:
-            print(f"\n⏰ Generating readings for {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
+            print(f"\n Generating readings for {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
             
             for meter_id in self.meters:
                 reading = self.generate_reading(meter_id, current_time)
@@ -144,7 +145,7 @@ class SmartMeterSimulator:
         For 500 meters reporting every 5 minutes for 14 days:
         500 * 288 readings/day * 14 days = 2,016,000 readings
         """
-        print(f"\n📊 Generating {days} days of historical data")
+        print(f"\n Generating {days} days of historical data")
         print(f"Number of meters: {self.num_meters}")
         print(f"Expected readings: ~{self.num_meters * 288 * days:,}")
         
@@ -176,7 +177,7 @@ class SmartMeterSimulator:
         """Clean shutdown"""
         self.mqtt_client.loop_stop()
         self.mqtt_client.disconnect()
-        print("✓ Simulator stopped")
+        print("Simulator stopped")
 
 def main():
     print("=" * 60)
@@ -195,7 +196,7 @@ def main():
         if choice == '1':
             simulator.simulate_realtime(duration_hours=1)
         elif choice == '2':
-            simulator.generate_historical_data(days=14)
+            simulator.generate_historical_data(days=28)
         else:
             print("Invalid choice")
     except KeyboardInterrupt:
