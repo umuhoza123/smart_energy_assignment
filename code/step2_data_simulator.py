@@ -1,6 +1,6 @@
 """
 Step 2: Smart Meter Data Simulator
-Generates realistic energy consumption data for 500+ meters
+Generates realistic energy consumption daata for 500+ meters
 """
 
 import json
