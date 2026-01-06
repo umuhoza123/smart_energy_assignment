@@ -31,13 +31,14 @@ class EnergyDataSubscriber:
         self.setup_mqtt()
         
     def connect_db(self):
-        """Connect to PostgreSQL of database"""
+        """Connect to PostgreSQL database"""
         try:
             self.db_conn = psycopg2.connect(**DB_CONFIG)
             self.db_cursor = self.db_conn.cursor()
             print("✓ Connected to PostgreSQL database")
         except Exception as e:
-            print(f"✗ Database connection is error: {e}")
+            print(f"✗ Database connection 
+                  is error: {e}")
             raise
     
     def setup_mqtt(self):
