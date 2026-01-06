@@ -1,6 +1,6 @@
 """
 Step 1: MQTT Subscriber for Energy Readings
-This program subscribes to energy/meters/# topic and stores data in PostgreSQL
+This program subscribes to energy/meters/# topic and stores data in PostgreSQL 
 """
 
 import json
@@ -37,7 +37,8 @@ class EnergyDataSubscriber:
             self.db_cursor = self.db_conn.cursor()
             print("✓ Connected to PostgreSQL database")
         except Exception as e:
-            print(f"✗ Database connection error: {e}")
+            print(f"✗ Database connection 
+                  is error: {e}")
             raise
     
     def setup_mqtt(self):
