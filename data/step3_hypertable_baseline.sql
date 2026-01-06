@@ -78,3 +78,9 @@ ORDER BY month, total_energy DESC;
 -- Query 4: Full dataset scan
 SELECT COUNT(*), AVG(power), MAX(power), MIN(power)
 FROM energy_readings;
+-- Query 1: Average power consumption per hour today
+SELECT time_bucket('1 hour', timestamp) AS hour,
+AVG(power) as avg_power
+FROM energy_readings
+WHERE timestamp >= DATE_TRUNC('day', NOW())
+GROUP BY hour ORDER BY hour;
