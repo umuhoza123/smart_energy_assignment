@@ -1,7 +1,7 @@
 """
 Step 3: Historical Data Loader
 Generates 2 weeks of historical smart meter data and loads directly into PostgreSQL
-This is FASTER than using MQTT and is meant for bulk data loading
+(This is FASTER than using MQTT and is meant for bulk data loading)
 """
 
 import psycopg2

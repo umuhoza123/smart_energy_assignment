@@ -57,7 +57,7 @@ class EnergyDataSubscriber:
             count = self.db_cursor.fetchone()[0]
             print(f"✓ Current records in database: {count:,}")
         except Exception as e:
-            print(f"✗ Database connection error: {e}")
+            print(f"✗ Database connection is error: {e}")
             raise
     
     def setup_mqtt(self):
